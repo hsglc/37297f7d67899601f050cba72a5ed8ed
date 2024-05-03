@@ -8,10 +8,13 @@ export const HeaderWrapper = styled.header`
   background-color: #008641;
   color: #fff;
   height: 51px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 `;
 
 export const Container = styled.div`
-  max-width: 960px;
+  max-width: 1110px;
   margin-left: auto;
   margin-right: auto;
   width: 100%;

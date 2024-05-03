@@ -9,7 +9,7 @@ export const NavMenuWrapper = styled.nav`
 `;
 
 export const Container = styled.div`
-  max-width: 960px;
+  max-width: 1110px;
   margin-left: auto;
   margin-right: auto;
   width: 100%;

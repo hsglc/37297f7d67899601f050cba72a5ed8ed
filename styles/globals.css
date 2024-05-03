@@ -17,6 +17,10 @@
   3. Add accessible line-height
   4. Improve text rendering
 */
+html {
+  height: 100%;
+  background-color: #edeff1;
+}
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
