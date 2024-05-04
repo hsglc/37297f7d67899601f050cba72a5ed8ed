@@ -55,8 +55,12 @@ export const NavMenu = () => {
           </LinkItemContainer>
         </NavLinkContainer>
         <TimeContainer>
-          <TimeElement>{getCurrentDateTime().dateElement}</TimeElement>
-          <TimeElement>{getCurrentDateTime().timeElement}</TimeElement>
+          <TimeElement suppressHydrationWarning>
+            {getCurrentDateTime().dateElement}
+          </TimeElement>
+          <TimeElement suppressHydrationWarning>
+            {getCurrentDateTime().timeElement}
+          </TimeElement>
         </TimeContainer>
       </Container>
     </NavMenuWrapper>

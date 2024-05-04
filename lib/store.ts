@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-// ...
+import sportProgramReducer from "@/features/sportProgram/sportProgramSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    sportProgram: sportProgramReducer,
+  },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
