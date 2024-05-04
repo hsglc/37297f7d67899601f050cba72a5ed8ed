@@ -6,7 +6,7 @@ import { NavMenu } from "@/components/NavMenu";
 import type { SportProgram } from "@/types";
 import type { GetServerSideProps } from "next/types";
 import { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/hooks";
 import { initSportProgram } from "@/features/sportProgram/sportProgramSlice";
 
 type Props = {
@@ -17,7 +17,6 @@ export default function Program({ data }: Props) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("girdi");
     dispatch(initSportProgram(data));
   }, [data]);
 
@@ -61,6 +60,23 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       notFound: true,
     };
   }
+
+  // const filteredData = {
+  //   isSuccess: data.isSuccess,
+  //   data: {
+  //     events: data.data.events.map((event) => ({
+  //       bid: event.bid,
+  //       mb: event.mb,
+  //       edh: event.edh,
+  //       en: event.en,
+  //       iskbet: event.iskbet,
+  //       live: event.live,
+  //       m: {
+
+  //       }
+  //     })),
+  //   },
+  // };
 
   return {
     props: {
