@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import sportProgramReducer from "@/features/sportProgram/sportProgramSlice";
-
+// import { setupListeners } from "@reduxjs/toolkit/query";
+import { sportProgramApi } from "@/services/program";
 export const store = configureStore({
   reducer: {
-    sportProgram: sportProgramReducer,
+    [sportProgramApi.reducerPath]: sportProgramApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(sportProgramApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -13,22 +13,38 @@ import {
   FilterElements,
   MatchEndTitle,
 } from "./styled";
+import { useRouter } from "next/router";
+import { Props } from "./types";
+import { useRouterParams } from "@/hooks/useRouterFilter";
 
-export const MatchesFilterSection = () => {
+export const MatchesFilterSection = ({ dates }: Props) => {
   const [name, setName] = useState<string>("");
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
-  const [kingBet, setKingBet] = useState<boolean>(false);
-  const [oneMatch, setOneMatch] = useState<boolean>(false);
+
+  const { toggleParam, clearParams, setParam } = useRouterParams({
+    method: "replace",
+    shallow: true,
+  });
 
   const onDateChange = (date: string) => {
     if (selectedDates.includes(date)) {
-      setSelectedDates(
-        selectedDates.filter((selectedDate) => selectedDate !== date)
+      const newSelectedDates = selectedDates.filter(
+        (selectedDate) => selectedDate !== date
       );
+      setSelectedDates(newSelectedDates);
+      setParam("date", newSelectedDates.join(","));
     } else {
-      setSelectedDates([...selectedDates, date]);
+      const newSelectedDates = [...selectedDates, date];
+      setSelectedDates(newSelectedDates);
+      setParam("date", newSelectedDates.join(","));
     }
   };
+
+  const onNameInputChange = (e: string) => {
+    setName(e);
+  };
+
+  const { query } = useRouter();
 
   return (
     <Container>
@@ -46,31 +62,29 @@ export const MatchesFilterSection = () => {
             }
             name="search-team"
             value={name}
-            onChange={setName}
+            onChange={onNameInputChange}
             placeholder="Takım adı giriniz"
           />
           <DatePicker
-            onChange={(date) => {
-              onDateChange(date);
-            }}
+            onChange={(date) => onDateChange(date)}
             value={selectedDates}
-            options={["Bugün", "Yarın"]}
+            options={dates}
             placeholder="Tarih"
           />
         </NameAndDateWrapper>
         <KingAndOneMatchWrapper>
-          <TransparentButton onClick={() => setKingBet(!kingBet)}>
+          <TransparentButton onClick={() => toggleParam("iskbet", true)}>
             <Image
-              src={kingBet ? "/svg/activeKingBet.svg" : "/svg/kingBet.svg"}
+              src={query.iskbet ? "/svg/activeKingBet.svg" : "/svg/kingBet.svg"}
               alt="king bet"
               width={25}
               height={20}
               priority
             />
           </TransparentButton>
-          <TransparentButton onClick={() => setOneMatch(!oneMatch)}>
+          <TransparentButton onClick={() => toggleParam("mb", "1")}>
             <Image
-              src={oneMatch ? "/svg/activeOneMatch.svg" : "/svg/oneMatch.svg"}
+              src={query.mb ? "/svg/activeOneMatch.svg" : "/svg/oneMatch.svg"}
               alt="one match"
               width={25}
               height={20}
@@ -78,7 +92,8 @@ export const MatchesFilterSection = () => {
             />
           </TransparentButton>
 
-          <ClearFilterButton>
+          <ClearFilterButton
+            onClick={() => clearParams("iskbet", "mb", "date")}>
             <Image
               src="/svg/trash.svg"
               alt="clear filter"
