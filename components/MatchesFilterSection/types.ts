@@ -1,3 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type Props = {
-    dates: string[];
-}
+  dates: string[];
+  name: string;
+  updateResultsByName: (e: string) => void;
+};

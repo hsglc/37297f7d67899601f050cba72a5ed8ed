@@ -7,7 +7,7 @@ export const Input = ({ placeholder, value, onChange, name, icon }: Props) => {
       <CustomInput
         name={name}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
       />
       {icon && <IconWrapper>{icon}</IconWrapper>}

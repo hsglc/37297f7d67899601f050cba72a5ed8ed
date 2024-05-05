@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 export type Props = {
   value: string | number;
-  onChange: (value: string) => void;
+  onChange: (e: string) => void;
   placeholder: string;
   name: string;
   icon: React.ReactNode | null;

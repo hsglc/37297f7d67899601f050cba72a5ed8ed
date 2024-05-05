@@ -20,6 +20,7 @@ export const DatePicker = ({
   onChange,
   value,
   placeholder,
+  isSearching
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,12 +40,12 @@ export const DatePicker = ({
 
   return (
     <SelectContainer ref={selectRef}>
-      <Placeholder isChecked={isAnyChecked} onClick={() => setIsOpen(!isOpen)}>
+      <Placeholder isChecked={isSearching} onClick={() => setIsOpen(!isOpen)}>
         {placeholder}
       </Placeholder>
-      <IconWrapper isOpen={!isOpen} isChecked={isAnyChecked}>
+      <IconWrapper isOpen={!isOpen} isChecked={isSearching}>
         <Image
-          src={isAnyChecked ? "/svg/activeFilter.svg" : "/svg/upperArrow.svg"}
+          src={isSearching ? "/svg/activeFilter.svg" : "/svg/upperArrow.svg"}
           alt="open date dropdown"
           width={8}
           height={8}

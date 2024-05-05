@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import { Input } from "../Input";
@@ -17,9 +17,10 @@ import { useRouter } from "next/router";
 import { Props } from "./types";
 import { useRouterParams } from "@/hooks/useRouterFilter";
 
-export const MatchesFilterSection = ({ dates }: Props) => {
-  const [name, setName] = useState<string>("");
+export const MatchesFilterSection = ({ dates, name, updateResultsByName }: Props) => {
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
+
+  const { query } = useRouter();
 
   const { toggleParam, clearParams, setParam } = useRouterParams({
     method: "replace",
@@ -40,11 +41,15 @@ export const MatchesFilterSection = ({ dates }: Props) => {
     }
   };
 
-  const onNameInputChange = (e: string) => {
-    setName(e);
-  };
+  
 
-  const { query } = useRouter();
+  useEffect(() => {
+    const dates = decodeURIComponent(query.date as string);
+    if (dates === "undefined") return setSelectedDates([]);
+    else {
+      setSelectedDates(dates.split(","));
+    }
+  }, [query.id, query.date]);
 
   return (
     <Container>
@@ -62,10 +67,11 @@ export const MatchesFilterSection = ({ dates }: Props) => {
             }
             name="search-team"
             value={name}
-            onChange={onNameInputChange}
+            onChange={updateResultsByName}
             placeholder="Takım adı giriniz"
           />
           <DatePicker
+            isSearching={Boolean(query.date)}
             onChange={(date) => onDateChange(date)}
             value={selectedDates}
             options={dates}

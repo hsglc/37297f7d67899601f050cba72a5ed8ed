@@ -3,4 +3,5 @@ export type Props = {
   onChange: (value: string) => void;
   value: string[];
   placeholder: string;
+  isSearching: boolean;
 };
