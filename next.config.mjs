@@ -4,6 +4,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  async redirects() {
+    return [
+      // Wildcard path matching
+      {
+        source: "/",
+        destination: "/program/futbol",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
