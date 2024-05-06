@@ -4,4 +4,5 @@ export type Props = {
   value: string[];
   placeholder: string;
   isSearching: boolean;
+  fullWidth?: boolean;
 };

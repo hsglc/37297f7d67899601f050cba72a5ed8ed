@@ -7,12 +7,17 @@ type CouponState = {
   events: CouponEvent[];
   totalOdds: number;
   numberOfEvents: number;
+  isVisible: boolean;
+  betTimes: number;
+  totalWin: number;
 };
 
 const initialState: CouponState = {
   events: [],
   totalOdds: 0,
   numberOfEvents: 0,
+  isVisible: true,
+  betTimes: 20,
 };
 
 export const couponSlice = createSlice({
@@ -45,13 +50,27 @@ export const couponSlice = createSlice({
       }
       if (state.events.length === 0) {
         state.totalOdds = 0;
+        state.isVisible = false;
       } else {
         state.totalOdds /= action.payload.m.odd;
       }
     },
+
+    setBetTimes: (state, action: PayloadAction<number>) => {
+      state.betTimes = action.payload;
+    },
+
+    toggleCouponVisibility: (state) => {
+      state.isVisible = !state.isVisible;
+    },
   },
 });
 
-export const { addOrUpdateEvent, removeEvent } = couponSlice.actions;
+export const {
+  addOrUpdateEvent,
+  removeEvent,
+  toggleCouponVisibility,
+  setBetTimes,
+} = couponSlice.actions;
 
 export default couponSlice.reducer;

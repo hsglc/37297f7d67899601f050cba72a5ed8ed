@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { useAppDispatch } from "@/lib/hooks";
-import { removeEvent } from "@/features/coupon/couponSlice";
+import { removeEvent } from "@/store/coupon/couponSlice";
 
 import {
   Container,

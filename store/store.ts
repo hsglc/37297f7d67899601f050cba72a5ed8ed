@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { setupListeners } from "@reduxjs/toolkit/query";
 import { sportProgramApi } from "@/services/program";
-import couponReducer from "@/features/coupon/couponSlice";
+import couponReducer from "@/store/coupon/couponSlice";
 import storage from "redux-persist/lib/storage";
 import {
   persistReducer,

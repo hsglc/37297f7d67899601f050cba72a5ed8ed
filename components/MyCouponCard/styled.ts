@@ -2,15 +2,16 @@ import styled from "styled-components";
 
 export const CardWrapper = styled.section`
   width: 240px;
-  height: 480px;
+  height: 100%;
+  max-height: calc(-55px + 100vh);
   border-radius: 0 4px 4px 0;
   background-color: #ffffff;
   margin-left: 4px;
 `;
 
 export const CardContainer = styled.div`
+  height: auto;
   position: sticky;
-  height: 100%;
 `;
 
 export const CardHeader = styled.div`
@@ -43,15 +44,34 @@ export const TotalOdds = styled.span`
   font-weight: 500;
 `;
 
-export const TotalMatchesWrapper = styled.div`
+export const TotalMatchesWrapper = styled.div<{ isOpen: boolean }>`
   position: relative;
   border-radius: 50%;
   width: 28px;
   height: 28px;
-  background-color: #898e92;
+  background-color: ${({ isOpen }) => (isOpen ? "transparent" : "#898e92;")};
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const MatchCount = styled.div`
+  background-color: #F7E102;
+  border-radius: 3px;
+  padding: 6px 11px;
+  color: black;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+`;
+
+export const TotalMatchesIconContainer = styled.div<{ isHovered: boolean }>`
+  transform: ${({ isHovered }) =>
+    isHovered ? "rotate(-180deg)" : "rotate(0deg)"};
 `;
 
 export const TotalMatches = styled.span`
@@ -73,6 +93,13 @@ export const TotalMatches = styled.span`
 `;
 
 export const CardBody = styled.div`
+  // max-height: calc(-630px + 100vh);
+  min-height: 135px;
+  overflow: hidden auto;
+  position: relative;
+`;
+
+export const SelectedEvents = styled.div`
   max-height: 230px;
   overflow: auto;
 `;
@@ -98,4 +125,40 @@ export const NoMatchesDescription = styled.p`
   line-height: 14px;
   font-size: 12px;
   max-width: 220px;
+`;
+
+export const CouponCheckout = styled.div`
+  background-color: #282F33;
+  border-radius: 0 0 6px 0;
+  padding: 10px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  color: white;
+  margin-top: 7.5px;
+`;
+
+
+
+export const BetAmount = styled.p`
+  line-height: 13.3px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: 6px;
+`;
+
+
+export const FlexTextContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  line-height: 13.3px;
+  & > :first-child {
+    font-weight: 500;
+  }
+  & > :last-child {
+    font-weight: 700;
+  }
+  
 `;

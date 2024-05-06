@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-export const SelectContainer = styled.div`
+export const SelectContainer = styled.div<{ fullWidth: boolean }>`
   -webkit-box-align: center;
   align-items: center;
   background: rgb(33, 38, 41);
@@ -15,7 +15,7 @@ export const SelectContainer = styled.div`
   padding-left: 8px;
   padding-right: 15px;
   position: relative;
-  width: 82px;
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "82px")};
 `;
 
 export const SelectedOption = styled.div`

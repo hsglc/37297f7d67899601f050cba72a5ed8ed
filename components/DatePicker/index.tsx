@@ -20,7 +20,8 @@ export const DatePicker = ({
   onChange,
   value,
   placeholder,
-  isSearching
+  isSearching,
+  fullWidth = false,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,10 +37,8 @@ export const DatePicker = ({
     return value.includes(date);
   };
 
-  const isAnyChecked = value.length > 0;
-
   return (
-    <SelectContainer ref={selectRef}>
+    <SelectContainer ref={selectRef} fullWidth={fullWidth}>
       <Placeholder isChecked={isSearching} onClick={() => setIsOpen(!isOpen)}>
         {placeholder}
       </Placeholder>

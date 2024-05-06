@@ -10,7 +10,7 @@ import {
 } from "./styled";
 import type { Props } from "./types";
 import { useAppDispatch } from "@/lib/hooks";
-import { addOrUpdateEvent } from "@/features/coupon/couponSlice";
+import { addOrUpdateEvent } from "@/store/coupon/couponSlice";
 import { MbBadge } from "@/components/MbBadge/styled";
 
 export const Match = ({ event, selectedMatch, index }: Props) => {

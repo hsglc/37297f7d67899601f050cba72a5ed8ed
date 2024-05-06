@@ -1,7 +1,6 @@
 import {
   BaseQueryFn,
   createApi,
-  fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import axiosInstance from "@/lib/axiosInstance";
 import type { AxiosRequestConfig, AxiosError } from "axios";

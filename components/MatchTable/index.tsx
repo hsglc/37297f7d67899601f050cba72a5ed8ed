@@ -142,7 +142,6 @@ export const MatchTable = () => {
       <MatchFilter dates={dates} name={name} setName={setName} />
       <div>
         {isLoading && <div>Loading...</div>}
-        {/* {error && <div>Error...</div>} */}
         {dates.map((date) => (
           <div key={date}>
             <MatchHeader key={date} day={date} program={currentProgram.id} />
