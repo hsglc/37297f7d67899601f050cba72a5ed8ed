@@ -15,25 +15,42 @@ import {
   CardBody,
   TotalMatchesIconContainer,
   MatchCount,
-  CouponCheckout,
-  BetAmount,
-  FlexTextContainer,
-  ApproveBetButton,
+  ModalContent,
 } from "./styled";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { CouponEvent } from "./CouponEvent";
-import { toggleCouponVisibility } from "@/store/coupon/couponSlice";
+import {
+  resetCoupon,
+  toggleCouponVisibility,
+} from "@/store/coupon/couponSlice";
 import useHover from "@/hooks/useHover";
-import { Select } from "../Select";
+import { useState } from "react";
+import { Modal } from "../Modal";
+import { CouponCheckout } from "./CouponCheckout";
 
 export const MyCouponCard = () => {
-  const { totalOdds, events, isVisible, betTimes } = useAppSelector(
+  const { totalOdds, events, isVisible } = useAppSelector(
     (state) => state.coupon
   );
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
 
   const dispatch = useAppDispatch();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const approveBet = () => {
+    dispatch(resetCoupon());
+    closeModal();
+  };
 
   const icon = isVisible
     ? "/svg/upperArrow.svg"
@@ -43,6 +60,14 @@ export const MyCouponCard = () => {
 
   return (
     <CardWrapper>
+      {isOpen && (
+        <Modal onClose={closeModal}>
+          <ModalContent>
+            <h2>Kuponunuz Başarıyla oluşturulmuştur</h2>
+            <button onClick={approveBet}>Yeni Kupon Yap</button>
+          </ModalContent>
+        </Modal>
+      )}
       <CardContainer>
         <CardHeader
           ref={hoverRef}
@@ -95,27 +120,7 @@ export const MyCouponCard = () => {
           </CardBody>
         )}
       </CardContainer>
-      {isVisible && (
-        <CouponCheckout>
-          <div>
-            <BetAmount>Misli</BetAmount>
-            <Select />
-          </div>
-          <FlexTextContainer>
-            <span>Kupon Bedeli:</span>
-            <span>{betTimes},00</span>
-          </FlexTextContainer>
-          <FlexTextContainer>
-            <span>Toplam Oran:</span>
-            <span>{totalOdds.toFixed(2)}</span>
-          </FlexTextContainer>
-          <FlexTextContainer>
-            <span>Maksimum Kazanç:</span>
-            <span>{(totalOdds * betTimes).toFixed(2)}</span>
-          </FlexTextContainer>
-          <ApproveBetButton>Hemen Oyna</ApproveBetButton>
-        </CouponCheckout>
-      )}
+      {isVisible && <CouponCheckout openModal={openModal} />}
     </CardWrapper>
   );
 };

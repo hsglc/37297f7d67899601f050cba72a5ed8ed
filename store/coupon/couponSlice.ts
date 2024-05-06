@@ -68,6 +68,12 @@ export const couponSlice = createSlice({
     toggleCouponVisibility: (state) => {
       state.isVisible = !state.isVisible;
     },
+    resetCoupon: (state) => {
+      state.events = [];
+      state.totalOdds = 0;
+      state.numberOfEvents = 0;
+      state.isVisible = false;
+    }
   },
 });
 
@@ -76,6 +82,7 @@ export const {
   removeEvent,
   toggleCouponVisibility,
   setBetTimes,
+  resetCoupon,
 } = couponSlice.actions;
 
 export default couponSlice.reducer;
