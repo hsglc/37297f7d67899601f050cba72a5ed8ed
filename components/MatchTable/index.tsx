@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useDeferredValue, useMemo, useState } from "react";
 import { Container } from "./styled";
 import { MatchFilter } from "../MatchFilter";
 import { useRouter } from "next/router";
@@ -9,6 +9,7 @@ import { useGetSportProgramByIdQuery } from "@/services/program";
 import { useRouterParams } from "@/hooks/useRouterFilter";
 import { MatchHeader } from "./MatchHeader";
 import { Match } from "./Match";
+import { Event } from "@/types";
 
 const programType = {
   futbol: {
@@ -26,13 +27,32 @@ const programType = {
 };
 
 export const MatchTable = () => {
+  function organizeMatchesByStartTime(timesArray: Event[]) {
+    // Sort the times based on the 'saat' field
+    timesArray.sort(function (a, b) {
+      // Split the time strings to compare hours and minutes separately
+      const timeA = a.edh.split(":");
+      const timeB = b.edh.split(":");
+
+      // Compare the hours
+      if (parseInt(timeA[0]) !== parseInt(timeB[0])) {
+        return parseInt(timeA[0]) - parseInt(timeB[0]);
+      } else {
+        // If hours are equal, compare the minutes
+        return parseInt(timeA[1]) - parseInt(timeB[1]);
+      }
+    });
+
+    return timesArray;
+  }
   const { query } = useRouter();
   const { getParamValue } = useRouterParams();
   const [name, setName] = useState<string>("");
+  const deferredName = useDeferredValue(name);
 
-  const program = query.id as string;
-
-  const currentProgram = programType[program as keyof typeof programType];
+  const currentProgram = useMemo(() => {
+    return programType[query.id as keyof typeof programType];
+  }, [query.id]);
 
   const { data, error, isLoading } = useGetSportProgramByIdQuery(
     currentProgram?.id ?? 1
@@ -93,11 +113,7 @@ export const MatchTable = () => {
         }
       });
     }
-  }, [query, data]);
-
-  const updateResultsByName = useCallback((e: string) => {
-    setName(e);
-  }, []);
+  }, [query, data, deferredName]);
 
   const dates = useMemo(() => {
     const dateSet = new Set<string>();
@@ -112,25 +128,23 @@ export const MatchTable = () => {
     return sortDates(Array.from(dateSet));
   }, [data, query.id]);
 
-  const groupByDay = (day: string) => {
-    return filteredData?.filter((match) => match.ede === day);
-  };
+  const groupMatcheshByDay = useCallback(
+    (day: string) => {
+      return filteredData?.filter((match) => match.ede === day) ?? [];
+    },
+    [filteredData]
+  );
 
-  console.log("filteredData", filteredData);
   return (
     <Container>
-      <MatchFilter
-        dates={dates}
-        name={name}
-        updateResultsByName={updateResultsByName}
-      />
+      <MatchFilter dates={dates} name={name} setName={setName} />
       <div>
         {isLoading && <div>Loading...</div>}
-        {error && <div>Error...</div>}
+        {/* {error && <div>Error...</div>} */}
         {dates.map((date) => (
           <div key={date}>
             <MatchHeader key={date} day={date} program={currentProgram.id} />
-            {groupByDay(date)?.map((event, index) => {
+            {groupMatcheshByDay(date)?.map((event, index) => {
               const selectedMatch = event.m.find(
                 (m) => m.muk === currentProgram.muk
               );

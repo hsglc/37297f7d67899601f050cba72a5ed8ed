@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { Props } from "./types";
 import { useRouterParams } from "@/hooks/useRouterFilter";
 
-export const MatchFilter = ({ dates, name, updateResultsByName }: Props) => {
+export const MatchFilter = ({ dates, name, setName }: Props) => {
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
   const { query } = useRouter();
@@ -67,7 +67,7 @@ export const MatchFilter = ({ dates, name, updateResultsByName }: Props) => {
             }
             name="search-team"
             value={name}
-            onChange={updateResultsByName}
+            onChange={setName}
             placeholder="Takım adı giriniz"
           />
           <DatePicker

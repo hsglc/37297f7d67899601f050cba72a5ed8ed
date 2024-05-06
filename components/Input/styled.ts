@@ -15,7 +15,7 @@ export const CustomInput = styled.input`
   color: #fff;
   height: 100%;
   ::placeholder {
-    color: #3d6486;
+    color: #4D5153;
     line-height: 14px;
     font-size: 12px;
     font-weight: 500;

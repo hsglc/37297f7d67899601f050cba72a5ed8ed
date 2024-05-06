@@ -9,14 +9,12 @@ import {
   OddContainer,
 } from "./styled";
 import { Props } from "./types";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/hooks";
 import { addOrUpdateEvent } from "@/features/coupon/couponSlice";
 import { MbBadge } from "@/components/MbBadge/styled";
 
 export const Match = ({ event, selectedMatch, index }: Props) => {
   const dispatch = useAppDispatch();
-  const { events } = useAppSelector((state) => state.coupon);
-  console.log("events :", events);
   const { mb, edh, en, iskbet, live } = event;
 
   return (

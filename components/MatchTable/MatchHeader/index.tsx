@@ -1,6 +1,9 @@
 import Image from "next/image";
-import { Container, Date, ExpandIconContainer, Odds } from "./styled";
+import { memo } from "react";
+
 import type { Props } from "./types";
+
+import { Container, Date, ExpandIconContainer, Odds } from "./styled";
 
 export const MatchHeader = ({ day, program }: Props) => {
   return (
@@ -23,3 +26,5 @@ export const MatchHeader = ({ day, program }: Props) => {
     </Container>
   );
 };
+
+export const MatchHeaderMemo = memo(MatchHeader);

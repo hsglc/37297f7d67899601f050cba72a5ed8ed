@@ -4,7 +4,6 @@ export const Container = styled.div<{ index: number }>`
   background: ${({ index }) => (index % 2 === 0 ? "white" : "#E8EDEF")};
   display: flex;
   min-height: 34px;
-  
 `;
 
 export const Detail = styled.ul`
@@ -15,8 +14,6 @@ export const Detail = styled.ul`
   width: 84%;
   padding-right: 10px;
 `;
-
-
 
 export const StartTime = styled.li`
   line-height: 14px;
@@ -68,7 +65,7 @@ export const OddContainer = styled.ul`
     cursor: pointer;
     padding: 0;
     border: none;
-    border-right: 1px solid #dbe3e7;
+    border-left: 1px solid #dbe3e7;
     text-align: center;
     background-color: transparent;
     flex: 1;

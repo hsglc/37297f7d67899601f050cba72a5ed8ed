@@ -33,10 +33,13 @@ export const Odds = styled.div`
   width: 92px;
   justify-content: space-between;
   color: white;
+  height: 100%;
   & > div {
     border-right: 1px solid #414e55;
-    text-align: center;
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 10px;
     line-height: 12px;
     font-weight: 700;
