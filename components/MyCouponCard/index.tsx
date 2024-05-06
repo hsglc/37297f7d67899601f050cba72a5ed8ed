@@ -11,16 +11,16 @@ import {
   NoMatches,
   NoMatchesTitle,
   NoMatchesDescription,
+  CardBody,
 } from "./styled";
 
-import { useAppSelector, useAppDispatch } from "@/lib/hooks";
-import { removeEvent } from "@/features/coupon/couponSlice";
+import { useAppSelector } from "@/lib/hooks";
+import { CouponEvent } from "./CouponEvent";
 
 export const MyCouponCard = () => {
   const totalOdds = useAppSelector((state) => state.coupon.totalOdds);
   const events = useAppSelector((state) => state.coupon.events);
 
-  const dispatch = useAppDispatch();
   return (
     <CardWrapper>
       <CardContainer>
@@ -41,18 +41,11 @@ export const MyCouponCard = () => {
           </TotalMatchesWrapper>
         </CardHeader>
         {events.length > 0 ? (
-          <div>
+          <CardBody>
             {events.map((event) => (
-              <div key={event.bid}>
-                <div>{event.en}</div>
-                <div>{event.edh}</div>
-                <div>{event.m.odd}</div>
-                <button onClick={() => dispatch(removeEvent(event))}>
-                  Trash
-                </button>
-              </div>
+              <CouponEvent key={event.bid} event={event} />
             ))}
-          </div>
+          </CardBody>
         ) : (
           <NoMatches>
             <Image

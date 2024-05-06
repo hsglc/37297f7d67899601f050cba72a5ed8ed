@@ -3,9 +3,7 @@ import { Button } from "../Button/styled";
 
 export const Container = styled.section`
   background-color: #282f33;
-  position: sticky;
-  top: 51px;
-  z-index: 2;
+
   display: flex;
 `;
 

@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
 export const CardWrapper = styled.section`
-  min-width: 239px;
-  height: 305px;
+  width: 240px;
+  height: 480px;
   border-radius: 0 4px 4px 0;
-  position: sticky;
-  top: 51px;
-  z-index: 2;
+  background-color: #ffffff;
   margin-left: 4px;
 `;
 
@@ -74,10 +72,15 @@ export const TotalMatches = styled.span`
   line-height: 12px;
 `;
 
+export const CardBody = styled.div`
+  max-height: 230px;
+  overflow: auto;
+`;
+
 export const NoMatches = styled.div`
   background-color: #ffffff;
   padding: 49px 10px;
-  height: 100%;
+  max-height: 230px;
   display: flex;
   gap: 20px;
   flex-direction: column;

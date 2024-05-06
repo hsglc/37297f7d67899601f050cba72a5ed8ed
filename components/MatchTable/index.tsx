@@ -7,8 +7,8 @@ import { sortDates } from "@/utils/sortDates";
 
 import { useGetSportProgramByIdQuery } from "@/services/program";
 import { useRouterParams } from "@/hooks/useRouterFilter";
-import { MatchHeader } from "../MatchHeader";
-import { Match } from "../Match";
+import { MatchHeader } from "./MatchHeader";
+import { Match } from "./Match";
 
 const programType = {
   futbol: {
@@ -116,7 +116,7 @@ export const MatchTable = () => {
     return filteredData?.filter((match) => match.ede === day);
   };
 
-  console.log('filteredData', filteredData);
+  console.log("filteredData", filteredData);
   return (
     <Container>
       <MatchFilter
@@ -129,14 +129,15 @@ export const MatchTable = () => {
         {error && <div>Error...</div>}
         {dates.map((date) => (
           <div key={date}>
-            <MatchHeader key={date} day={date} />
-            {groupByDay(date)?.map((event) => {
+            <MatchHeader key={date} day={date} program={currentProgram.id} />
+            {groupByDay(date)?.map((event, index) => {
               const selectedMatch = event.m.find(
                 (m) => m.muk === currentProgram.muk
               );
               if (!selectedMatch) return null;
               return (
                 <Match
+                  index={index}
                   key={selectedMatch.mid}
                   event={event}
                   selectedMatch={selectedMatch}

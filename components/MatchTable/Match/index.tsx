@@ -5,28 +5,24 @@ import {
   Container,
   MatchDetail,
   Detail,
-  MbBadge,
   FlexContainer,
   OddContainer,
 } from "./styled";
-import { MbProps, Props } from "./types";
+import { Props } from "./types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { addOrUpdateEvent, removeEvent } from "@/features/coupon/couponSlice";
+import { addOrUpdateEvent } from "@/features/coupon/couponSlice";
+import { MbBadge } from "@/components/MbBadge/styled";
 
-const Mb = ({ mb }: MbProps) => {
-  return <MbBadge mb={mb} />;
-};
-
-export const Match = ({ event, selectedMatch }: Props) => {
+export const Match = ({ event, selectedMatch, index }: Props) => {
   const dispatch = useAppDispatch();
   const { events } = useAppSelector((state) => state.coupon);
   console.log("events :", events);
   const { mb, edh, en, iskbet, live } = event;
 
   return (
-    <Container>
+    <Container index={index}>
       <Detail>
-        <Mb mb={mb} />
+        <MbBadge mb={mb} />
 
         <StartTime>{edh}</StartTime>
         <MatchDetail>
@@ -57,9 +53,6 @@ export const Match = ({ event, selectedMatch }: Props) => {
       <OddContainer>
         {selectedMatch?.o.map((m) => (
           <button
-            style={{
-              marginRight: 5,
-            }}
             onClick={() =>
               dispatch(
                 addOrUpdateEvent({
@@ -69,6 +62,9 @@ export const Match = ({ event, selectedMatch }: Props) => {
                   edh: event.edh,
                   en: event.en,
                   m: m,
+                  mb: event.mb,
+                  iskbet: event.iskbet,
+                  live: event.live,
                 })
               )
             }

@@ -93,4 +93,7 @@ export interface CouponEvent {
   edh: string;
   en: string;
   m: O;
+  mb: number;
+  iskbet: boolean;
+  live: boolean;
 }
