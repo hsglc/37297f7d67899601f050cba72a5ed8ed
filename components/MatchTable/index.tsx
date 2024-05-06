@@ -1,11 +1,14 @@
-import React, { useCallback, useMemo, useState, useTransition } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Container } from "./styled";
-import { MatchesFilterSection } from "../MatchesFilterSection";
+import { MatchFilter } from "../MatchFilter";
 import { useRouter } from "next/router";
+
+import { sortDates } from "@/utils/sortDates";
 
 import { useGetSportProgramByIdQuery } from "@/services/program";
 import { useRouterParams } from "@/hooks/useRouterFilter";
-import { Event } from "@/types";
+import { MatchHeader } from "../MatchHeader";
+import { Match } from "../Match";
 
 const programType = {
   futbol: {
@@ -22,12 +25,10 @@ const programType = {
   },
 };
 
-export const MatchesTable = () => {
+export const MatchTable = () => {
   const { query } = useRouter();
   const { getParamValue } = useRouterParams();
   const [name, setName] = useState<string>("");
-  const [isPending, startTransition] = useTransition();
-  const [updatedMatches, setUpdatedMatches] = useState<Event[]>([]);
 
   const program = query.id as string;
 
@@ -94,12 +95,9 @@ export const MatchesTable = () => {
     }
   }, [query, data]);
 
-  const updateResultsByName = useCallback(
-    (e: string) => {
-      setName(e);
-    },
-    [filteredData]
-  );
+  const updateResultsByName = useCallback((e: string) => {
+    setName(e);
+  }, []);
 
   const dates = useMemo(() => {
     const dateSet = new Set<string>();
@@ -111,12 +109,17 @@ export const MatchesTable = () => {
       }
     });
 
-    return Array.from(dateSet);
+    return sortDates(Array.from(dateSet));
   }, [data, query.id]);
 
+  const groupByDay = (day: string) => {
+    return filteredData?.filter((match) => match.ede === day);
+  };
+
+  console.log('filteredData', filteredData);
   return (
     <Container>
-      <MatchesFilterSection
+      <MatchFilter
         dates={dates}
         name={name}
         updateResultsByName={updateResultsByName}
@@ -124,31 +127,24 @@ export const MatchesTable = () => {
       <div>
         {isLoading && <div>Loading...</div>}
         {error && <div>Error...</div>}
-        {filteredData?.map((match) => {
-          const selectedMatch = match.m.find(
-            (m) => m.muk === currentProgram.muk
-          );
-          if (!selectedMatch) return null;
-          return (
-            <div
-              key={selectedMatch.mid}
-              style={{
-                display: "flex",
-                gap: "10px",
-              }}>
-              <span>{match.mb}</span>
-              <span>{match.edh}</span>
-              <span>{match.en}</span>
-              <span>{match.iskbet}</span>
-              <span>{match.live}</span>
-              {selectedMatch?.o.map((m) => (
-                <div key={m.ov}>
-                  <span>{m.odd}</span>
-                </div>
-              ))}
-            </div>
-          );
-        })}
+        {dates.map((date) => (
+          <div key={date}>
+            <MatchHeader key={date} day={date} />
+            {groupByDay(date)?.map((event) => {
+              const selectedMatch = event.m.find(
+                (m) => m.muk === currentProgram.muk
+              );
+              if (!selectedMatch) return null;
+              return (
+                <Match
+                  key={selectedMatch.mid}
+                  event={event}
+                  selectedMatch={selectedMatch}
+                />
+              );
+            })}
+          </div>
+        ))}
       </div>
     </Container>
   );

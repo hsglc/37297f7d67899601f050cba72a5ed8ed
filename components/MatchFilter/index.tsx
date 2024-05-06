@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { Props } from "./types";
 import { useRouterParams } from "@/hooks/useRouterFilter";
 
-export const MatchesFilterSection = ({ dates, name, updateResultsByName }: Props) => {
+export const MatchFilter = ({ dates, name, updateResultsByName }: Props) => {
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
   const { query } = useRouter();
