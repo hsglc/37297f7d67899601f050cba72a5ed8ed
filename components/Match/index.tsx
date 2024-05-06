@@ -10,13 +10,19 @@ import {
   OddContainer,
 } from "./styled";
 import { MbProps, Props } from "./types";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { addOrUpdateEvent, removeEvent } from "@/features/coupon/couponSlice";
 
 const Mb = ({ mb }: MbProps) => {
   return <MbBadge mb={mb} />;
 };
 
 export const Match = ({ event, selectedMatch }: Props) => {
+  const dispatch = useAppDispatch();
+  const { events } = useAppSelector((state) => state.coupon);
+  console.log("events :", events);
   const { mb, edh, en, iskbet, live } = event;
+
   return (
     <Container>
       <Detail>
@@ -50,7 +56,25 @@ export const Match = ({ event, selectedMatch }: Props) => {
 
       <OddContainer>
         {selectedMatch?.o.map((m) => (
-          <span key={m.ov}>{m.odd}</span>
+          <button
+            style={{
+              marginRight: 5,
+            }}
+            onClick={() =>
+              dispatch(
+                addOrUpdateEvent({
+                  sid: event.sid,
+                  bid: event.bid,
+                  ede: event.ede,
+                  edh: event.edh,
+                  en: event.en,
+                  m: m,
+                })
+              )
+            }
+            key={m.ov}>
+            {m.odd}
+          </button>
         ))}
       </OddContainer>
     </Container>

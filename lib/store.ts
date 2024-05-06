@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 // import { setupListeners } from "@reduxjs/toolkit/query";
 import { sportProgramApi } from "@/services/program";
+import couponReducer from "@/features/coupon/couponSlice";
 export const store = configureStore({
   reducer: {
     [sportProgramApi.reducerPath]: sportProgramApi.reducer,
+    coupon: couponReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sportProgramApi.middleware),

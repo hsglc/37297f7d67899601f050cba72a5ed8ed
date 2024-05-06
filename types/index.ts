@@ -85,3 +85,12 @@ export interface Eprt {
   acr: string;
   pn: string;
 }
+
+export interface CouponEvent {
+  bid: number;
+  sid: number;
+  ede: string;
+  edh: string;
+  en: string;
+  m: O;
+}
