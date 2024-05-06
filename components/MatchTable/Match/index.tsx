@@ -8,7 +8,7 @@ import {
   FlexContainer,
   OddContainer,
 } from "./styled";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { useAppDispatch } from "@/lib/hooks";
 import { addOrUpdateEvent } from "@/features/coupon/couponSlice";
 import { MbBadge } from "@/components/MbBadge/styled";

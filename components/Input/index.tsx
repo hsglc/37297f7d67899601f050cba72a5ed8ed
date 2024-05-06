@@ -1,4 +1,4 @@
-import { Props } from "./types";
+import type { Props } from "./types";
 import { CustomInput, IconWrapper, InputWrapper } from "./styled";
 
 export const Input = ({ placeholder, value, onChange, name, icon }: Props) => {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 
 import { Input } from "../Input";
@@ -13,8 +14,7 @@ import {
   FilterElements,
   MatchEndTitle,
 } from "./styled";
-import { useRouter } from "next/router";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { useRouterParams } from "@/hooks/useRouterFilter";
 
 export const MatchFilter = ({ dates, name, setName }: Props) => {
@@ -40,8 +40,6 @@ export const MatchFilter = ({ dates, name, setName }: Props) => {
       setParam("date", newSelectedDates.join(","));
     }
   };
-
-  
 
   useEffect(() => {
     const dates = decodeURIComponent(query.date as string);

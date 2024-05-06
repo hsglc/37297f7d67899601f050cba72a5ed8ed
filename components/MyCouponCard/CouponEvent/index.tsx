@@ -15,7 +15,7 @@ import {
   EventName,
   Odd,
 } from "./styled";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const CouponEvent = ({ event }: Props) => {
   const dispatch = useAppDispatch();

@@ -1,5 +1,5 @@
 import { MbBadge } from "./styled";
-import { MbProps } from "./types";
+import type { MbProps } from "./types";
 
 const Mb = ({ mb }: MbProps) => {
   return <MbBadge mb={mb} />;

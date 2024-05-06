@@ -1,5 +1,4 @@
-import React from "react";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { Container, Wrapper } from "./styled";
 
 export const MainContent = ({ children }: Props) => {
