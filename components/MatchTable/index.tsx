@@ -130,7 +130,9 @@ export const MatchTable = () => {
 
   const groupMatcheshByDay = useCallback(
     (day: string) => {
-      return filteredData?.filter((match) => match.ede === day) ?? [];
+      return organizeMatchesByStartTime(
+        filteredData?.filter((match) => match.ede === day) ?? []
+      );
     },
     [filteredData]
   );
