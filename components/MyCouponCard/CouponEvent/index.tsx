@@ -46,7 +46,7 @@ export const CouponEvent = ({ event }: Props) => {
           <Image
             src="/svg/clear.svg"
             alt="delete event"
-            width={14}
+            width={16}
             height={16}
             priority
           />

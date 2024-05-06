@@ -18,6 +18,7 @@ import {
   CouponCheckout,
   BetAmount,
   FlexTextContainer,
+  ApproveBetButton,
 } from "./styled";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -27,7 +28,7 @@ import useHover from "@/hooks/useHover";
 import { Select } from "../Select";
 
 export const MyCouponCard = () => {
-  const { totalOdds, events, isVisible, betTimes, totalWin } = useAppSelector(
+  const { totalOdds, events, isVisible, betTimes } = useAppSelector(
     (state) => state.coupon
   );
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
@@ -112,6 +113,7 @@ export const MyCouponCard = () => {
             <span>Maksimum Kazanç:</span>
             <span>{(totalOdds * betTimes).toFixed(2)}</span>
           </FlexTextContainer>
+          <ApproveBetButton>Hemen Oyna</ApproveBetButton>
         </CouponCheckout>
       )}
     </CardWrapper>

@@ -62,12 +62,16 @@ export const OddContainer = styled.ul`
   line-height: 14.5px;
   font-weight: 700;
   & > button {
-    cursor: pointer;
-    padding: 0;
-    border: none;
-    border-left: 1px solid #dbe3e7;
-    text-align: center;
-    background-color: transparent;
-    flex: 1;
   }
+`;
+
+export const Odd = styled.button<{ isSelected: boolean }>`
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  border-left: 1px solid #dbe3e7;
+  text-align: center;
+  background-color: ${({ isSelected }) =>
+    isSelected ? "#F3E300" : "transparent"};
+  flex: 1;
 `;

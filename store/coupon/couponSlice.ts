@@ -9,7 +9,6 @@ type CouponState = {
   numberOfEvents: number;
   isVisible: boolean;
   betTimes: number;
-  totalWin: number;
 };
 
 const initialState: CouponState = {
@@ -32,7 +31,13 @@ export const couponSlice = createSlice({
         state.numberOfEvents += 1;
         state.events.push(action.payload);
       } else {
-        state.events[index] = action.payload;
+        const isSameOdd = state.events[index].m.odd === action.payload.m.odd;
+        if (!isSameOdd) {
+          state.events[index] = action.payload;
+        } else {
+          state.events.splice(index, 1);
+          state.numberOfEvents -= 1;
+        }
       }
 
       state.totalOdds = state.events.reduce(

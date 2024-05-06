@@ -25,26 +25,26 @@ const programType = {
     muk: "1_9",
   },
 };
+function organizeMatchesByStartTime(timesArray: Event[]) {
+  // Sort the times based on the 'saat' field
+  timesArray.sort(function (a, b) {
+    // Split the time strings to compare hours and minutes separately
+    const timeA = a.edh.split(":");
+    const timeB = b.edh.split(":");
+
+    // Compare the hours
+    if (parseInt(timeA[0]) !== parseInt(timeB[0])) {
+      return parseInt(timeA[0]) - parseInt(timeB[0]);
+    } else {
+      // If hours are equal, compare the minutes
+      return parseInt(timeA[1]) - parseInt(timeB[1]);
+    }
+  });
+
+  return timesArray;
+}
 
 export const MatchTable = () => {
-  function organizeMatchesByStartTime(timesArray: Event[]) {
-    // Sort the times based on the 'saat' field
-    timesArray.sort(function (a, b) {
-      // Split the time strings to compare hours and minutes separately
-      const timeA = a.edh.split(":");
-      const timeB = b.edh.split(":");
-
-      // Compare the hours
-      if (parseInt(timeA[0]) !== parseInt(timeB[0])) {
-        return parseInt(timeA[0]) - parseInt(timeB[0]);
-      } else {
-        // If hours are equal, compare the minutes
-        return parseInt(timeA[1]) - parseInt(timeB[1]);
-      }
-    });
-
-    return timesArray;
-  }
   const { query } = useRouter();
   const { getParamValue } = useRouterParams();
   const [name, setName] = useState<string>("");
@@ -68,7 +68,7 @@ export const MatchTable = () => {
     } else {
       const dates = date.split(",");
       const isDateValid = date !== "undefined" && !dates.includes("undefined");
-      return data?.data.events.filter((event) => {
+      const newData = data?.data.events.filter((event) => {
         if (
           isDateValid &&
           dates.includes(event.ede) &&
@@ -112,6 +112,15 @@ export const MatchTable = () => {
           return false;
         }
       });
+
+      if (deferredName) {
+        return newData?.filter((event) =>
+          event.m.some((match) =>
+            match.mn.toLowerCase().includes(deferredName.toLowerCase())
+          )
+        );
+      }
+      return newData;
     }
   }, [query, data, deferredName]);
 
@@ -145,20 +154,24 @@ export const MatchTable = () => {
         {dates.map((date) => (
           <div key={date}>
             <MatchHeader key={date} day={date} program={currentProgram.id} />
-            {groupMatcheshByDay(date)?.map((event, index) => {
-              const selectedMatch = event.m.find(
-                (m) => m.muk === currentProgram.muk
-              );
-              if (!selectedMatch) return null;
-              return (
-                <Match
-                  index={index}
-                  key={selectedMatch.mid}
-                  event={event}
-                  selectedMatch={selectedMatch}
-                />
-              );
-            })}
+            {groupMatcheshByDay(date)
+              .filter((event) =>
+                event.en.toLowerCase().includes(deferredName.toLowerCase())
+              )
+              ?.map((event, index) => {
+                const selectedMatch = event.m.find(
+                  (m) => m.muk === currentProgram.muk
+                );
+                if (!selectedMatch) return null;
+                return (
+                  <Match
+                    index={index}
+                    key={selectedMatch.mid}
+                    event={event}
+                    selectedMatch={selectedMatch}
+                  />
+                );
+              })}
           </div>
         ))}
       </div>
