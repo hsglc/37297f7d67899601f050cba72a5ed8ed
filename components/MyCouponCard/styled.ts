@@ -93,7 +93,6 @@ export const TotalMatches = styled.span`
 `;
 
 export const CardBody = styled.div`
-  // max-height: calc(-630px + 100vh);
   min-height: 135px;
   overflow: hidden auto;
   position: relative;

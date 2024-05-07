@@ -4,45 +4,13 @@ import { MatchFilter } from "../MatchFilter";
 import { useRouter } from "next/router";
 
 import { sortDates } from "@/utils/sortDates";
+import { organizeMatchesByStartTime } from "@/utils/organizeMatchesByStartTime";
 
 import { useGetSportProgramByIdQuery } from "@/services/program";
 import { useRouterParams } from "@/hooks/useRouterFilter";
 import { MatchHeader } from "./MatchHeader";
 import { Match } from "./Match";
-import { Event } from "@/types";
-
-const programType = {
-  futbol: {
-    id: 1,
-    muk: "1_1",
-  },
-  basketbol: {
-    id: 2,
-    muk: "1_2",
-  },
-  tenis: {
-    id: 5,
-    muk: "1_9",
-  },
-};
-function organizeMatchesByStartTime(timesArray: Event[]) {
-  // Sort the times based on the 'saat' field
-  timesArray.sort(function (a, b) {
-    // Split the time strings to compare hours and minutes separately
-    const timeA = a.edh.split(":");
-    const timeB = b.edh.split(":");
-
-    // Compare the hours
-    if (parseInt(timeA[0]) !== parseInt(timeB[0])) {
-      return parseInt(timeA[0]) - parseInt(timeB[0]);
-    } else {
-      // If hours are equal, compare the minutes
-      return parseInt(timeA[1]) - parseInt(timeB[1]);
-    }
-  });
-
-  return timesArray;
-}
+import { SPORTS } from "@/constants";
 
 export const MatchTable = () => {
   const { query } = useRouter();
@@ -51,77 +19,37 @@ export const MatchTable = () => {
   const deferredName = useDeferredValue(name);
 
   const currentProgram = useMemo(() => {
-    return programType[query.id as keyof typeof programType];
+    return SPORTS[query.id as keyof typeof SPORTS];
   }, [query.id]);
 
-  const { data, error, isLoading } = useGetSportProgramByIdQuery(
-    currentProgram?.id ?? 1
+  const { data, isError, isLoading } = useGetSportProgramByIdQuery(
+    currentProgram?.id ?? SPORTS.futbol.id
   );
 
   const filteredData = useMemo(() => {
-    const iskbet = Boolean(getParamValue("iskbet"));
-    const mb = Number(getParamValue("mb"));
-    const date = String(getParamValue("date"));
+    const isKbetActive = Boolean(getParamValue("iskbet"));
+    const mbValue = Number(getParamValue("mb"));
+    const dateValue = String(getParamValue("date"));
 
-    if (!iskbet && !mb && date === "undefined") {
-      return data?.data.events;
-    } else {
-      const dates = date.split(",");
-      const isDateValid = date !== "undefined" && !dates.includes("undefined");
-      const newData = data?.data.events.filter((event) => {
-        if (
-          isDateValid &&
-          dates.includes(event.ede) &&
-          iskbet &&
-          event.iskbet &&
-          mb &&
-          event.mb === mb
-        ) {
-          return true;
-        } else if (
-          !mb &&
-          isDateValid &&
-          dates.includes(event.ede) &&
-          iskbet &&
-          event.iskbet
-        ) {
-          return true;
-        } else if (
-          !iskbet &&
-          isDateValid &&
-          dates.includes(event.ede) &&
-          mb &&
-          event.mb === mb
-        ) {
-          return true;
-        } else if (
-          !isDateValid &&
-          mb &&
-          event.mb === mb &&
-          iskbet &&
-          event.iskbet === iskbet
-        ) {
-          return true;
-        } else if (!isDateValid && !mb && iskbet && event.iskbet === iskbet) {
-          return true;
-        } else if (!isDateValid && !iskbet && mb && event.mb === mb) {
-          return true;
-        } else if (!iskbet && !mb && isDateValid && dates.includes(event.ede)) {
-          return true;
-        } else {
-          return false;
-        }
-      });
+    const isUndefinedDate = dateValue === "undefined";
+    const dates = isUndefinedDate ? [] : dateValue.split(",");
+    const isDateValid = !isUndefinedDate && !dates.includes("undefined");
 
-      if (deferredName) {
-        return newData?.filter((event) =>
-          event.m.some((match) =>
-            match.mn.toLowerCase().includes(deferredName.toLowerCase())
-          )
-        );
-      }
-      return newData;
+    const filteredEvents = data?.data.events.filter((event) => {
+      const isDateMatching = isDateValid ? dates.includes(event.ede) : true;
+      const isKbetMatching = isKbetActive ? event.iskbet : true;
+      const isMbMatching = mbValue ? event.mb === mbValue : true;
+
+      return isDateMatching && isKbetMatching && isMbMatching;
+    });
+
+    if (deferredName) {
+      return filteredEvents?.filter((event) =>
+        event.en.toLowerCase().includes(deferredName.toLowerCase())
+      );
     }
+
+    return filteredEvents;
   }, [query, data, deferredName]);
 
   const dates = useMemo(() => {
@@ -150,28 +78,25 @@ export const MatchTable = () => {
     <Container>
       <MatchFilter dates={dates} name={name} setName={setName} />
       <div>
-        {isLoading && <div>Loading...</div>}
+        {isLoading && <div>Yükleniyor</div>}
+        {isError && <div>Herhangi bir maç bulunamadı</div>}
         {dates.map((date) => (
           <div key={date}>
             <MatchHeader key={date} day={date} program={currentProgram.id} />
-            {groupMatcheshByDay(date)
-              .filter((event) =>
-                event.en.toLowerCase().includes(deferredName.toLowerCase())
-              )
-              ?.map((event, index) => {
-                const selectedMatch = event.m.find(
-                  (m) => m.muk === currentProgram.muk
-                );
-                if (!selectedMatch) return null;
-                return (
-                  <Match
-                    index={index}
-                    key={selectedMatch.mid}
-                    event={event}
-                    selectedMatch={selectedMatch}
-                  />
-                );
-              })}
+            {groupMatcheshByDay(date)?.map((event, index) => {
+              const selectedMatch = event.m.find(
+                (m) => m.muk === currentProgram.muk
+              );
+              if (!selectedMatch) return null;
+              return (
+                <Match
+                  index={index}
+                  key={selectedMatch.mid}
+                  event={event}
+                  selectedMatch={selectedMatch}
+                />
+              );
+            })}
           </div>
         ))}
       </div>

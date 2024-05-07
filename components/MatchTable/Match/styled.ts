@@ -61,17 +61,32 @@ export const OddContainer = styled.ul`
   letter-spacing: -0.2px;
   line-height: 14.5px;
   font-weight: 700;
-  & > button {
-  }
 `;
 
 export const Odd = styled.button<{ isSelected: boolean }>`
   cursor: pointer;
   padding: 0;
   border: none;
-  border-left: 1px solid #dbe3e7;
+  border-right: 1px solid #dbe3e7;
   text-align: center;
   background-color: ${({ isSelected }) =>
     isSelected ? "#F3E300" : "transparent"};
   flex: 1;
+`;
+
+export const DummyOdd = styled.p`
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  text-align: center;
+  color: white;
+  flex: 1;
+  font-size: 11px;
+  letter-spacing: -0.2px;
+  line-height: 14.5px;
+  font-weight: 700;
+  background-color: #2f373c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

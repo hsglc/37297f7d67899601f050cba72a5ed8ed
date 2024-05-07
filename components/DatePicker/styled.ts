@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const SelectContainer = styled.div<{ fullWidth: boolean }>`
   -webkit-box-align: center;
@@ -15,7 +15,9 @@ export const SelectContainer = styled.div<{ fullWidth: boolean }>`
   padding-left: 8px;
   padding-right: 15px;
   position: relative;
-  width: ${({ fullWidth }) => (fullWidth ? "100%" : "82px")};
+  ${({ fullWidth }) => css`
+    width: ${fullWidth ? "100%" : "82px"};
+  `};
 `;
 
 export const SelectedOption = styled.div`
@@ -29,7 +31,9 @@ export const Placeholder = styled.div<{ isChecked: boolean }>`
   line-height: 32px;
   user-select: none;
   width: 100%;
-  color: ${({ isChecked }) => (isChecked ? "rgb(247, 225, 2);" : "#fff;")};
+  ${({ isChecked }) => css`
+    color: ${isChecked ? "rgb(247, 225, 2);" : "#fff;"};
+  `};
 `;
 
 export const OptionsList = styled.ul`
@@ -66,15 +70,20 @@ export const OptionInput = styled.input`
 `;
 
 export const Checkmark = styled.span<{ isChecked: boolean }>`
-  border: ${({ isChecked }) =>
-    isChecked ? "2px solid rgb(247, 225, 2);" : "2px solid #fff"};
   height: 16px;
   left: 0px;
   position: absolute;
   top: 5px;
   width: 16px;
-  background: ${({ isChecked }) =>
-    isChecked ? "rgb(0, 109, 53);" : "transparent"};
+
+  border: 2px solid #fff;
+  background: transparent;
+  ${({ isChecked }) =>
+    isChecked &&
+    css`
+      background: rgb(0, 109, 53);
+      border: 2px solid rgb(247, 225, 2);
+    `};
 `;
 
 export const Date = styled.span<{ isChecked: boolean }>`

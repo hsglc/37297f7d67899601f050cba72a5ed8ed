@@ -58,6 +58,12 @@ export const MyCouponCard = () => {
     ? "/svg/white-iddaa.svg"
     : "/svg/upperArrow.svg";
 
+  const onToggleCouponVisibility = () => {
+    if (events.length > 0) {
+      dispatch(toggleCouponVisibility());
+    }
+  };
+
   return (
     <CardWrapper>
       {isOpen && (
@@ -69,11 +75,7 @@ export const MyCouponCard = () => {
         </Modal>
       )}
       <CardContainer>
-        <CardHeader
-          ref={hoverRef}
-          onClick={() => {
-            if (events.length > 0) dispatch(toggleCouponVisibility());
-          }}>
+        <CardHeader ref={hoverRef} onClick={onToggleCouponVisibility}>
           <TotalOddsWrapper>
             <MyCouponTitle>KUPONUM</MyCouponTitle>
             <TotalOdds>T. Oran: {totalOdds.toFixed(2)}</TotalOdds>

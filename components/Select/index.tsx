@@ -1,17 +1,16 @@
 import {
-  SelectedOption,
   SelectContainer,
   OptionsList,
   Placeholder,
-  IconWrapper,
   OptionLabel,
-  OptionInput,
 } from "@/components/DatePicker/styled";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setBetTimes } from "@/store/coupon/couponSlice";
+
+import { BET_OPTIONS } from "@/constants";
 
 export const Select = () => {
   const dispatch = useAppDispatch();
@@ -44,15 +43,11 @@ export const Select = () => {
       />
       {isOpen && (
         <OptionsList>
-          {[20, 30, 50, 100, 150, 500, 1000, 2000, 4000, 5000].map(
-            (betTimes) => (
-              <OptionLabel
-                key={betTimes}
-                onClick={() => selectBetTimes(betTimes)}>
-                {betTimes}
-              </OptionLabel>
-            )
-          )}
+          {BET_OPTIONS.map((bet) => (
+            <OptionLabel key={bet} onClick={() => selectBetTimes(bet)}>
+              {bet}
+            </OptionLabel>
+          ))}
         </OptionsList>
       )}
     </SelectContainer>

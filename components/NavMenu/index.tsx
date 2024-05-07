@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { getCurrentDateTime } from "@/utils/getCurrentDateTime";
 
+import { SPORTS } from "@/constants";
+
 import {
   Container,
   NavMenuWrapper,
@@ -20,37 +22,38 @@ export const NavMenu = () => {
     <NavMenuWrapper>
       <Container>
         <NavLinkContainer>
-          <LinkItemContainer isActiveProgram={program === "futbol"}>
-            <LinkItem href="/program/futbol">
+          <LinkItemContainer isActiveProgram={program === SPORTS.futbol.slug}>
+            <LinkItem href={SPORTS.futbol.href}>
               <Image
-                src="/svg/futbol.svg"
+                src={SPORTS.futbol.icon}
                 alt="futbol logo"
                 width={20}
                 height={20}
               />
-              <span>FUTBOL</span>
+              <span>{SPORTS.futbol.slug}</span>
             </LinkItem>
           </LinkItemContainer>
-          <LinkItemContainer isActiveProgram={program === "basketbol"}>
-            <LinkItem href="/program/basketbol">
+          <LinkItemContainer
+            isActiveProgram={program === SPORTS.basketbol.slug}>
+            <LinkItem href={SPORTS.basketbol.href}>
               <Image
-                src="/svg/basketbol.svg"
-                alt="basketbal Logo"
+                src={SPORTS.basketbol.icon}
+                alt="basketbol logo"
                 width={20}
                 height={20}
               />
-              <span>BASKETBOL</span>
+              <span>{SPORTS.basketbol.slug}</span>
             </LinkItem>
           </LinkItemContainer>
-          <LinkItemContainer isActiveProgram={program === "tenis"}>
-            <LinkItem href="/program/tenis">
+          <LinkItemContainer isActiveProgram={program === SPORTS.tenis.slug}>
+            <LinkItem href={SPORTS.tenis.href}>
               <Image
-                src="/svg/tenis.svg"
-                alt="tenis Logo"
+                src={SPORTS.tenis.icon}
+                alt="tenis logo"
                 width={20}
                 height={20}
               />
-              <span>TENİS</span>
+              <span>{SPORTS.tenis.slug}</span>
             </LinkItem>
           </LinkItemContainer>
         </NavLinkContainer>

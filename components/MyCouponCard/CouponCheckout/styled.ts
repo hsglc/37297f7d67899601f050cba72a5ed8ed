@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { Button } from "../../Button/styled";
 
-export const CouponCheckout = styled.div`
+export const Container = styled.div`
   background-color: #282f33;
   border-radius: 0 0 6px 0;
   padding: 10px 9px;

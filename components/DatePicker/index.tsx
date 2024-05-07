@@ -37,9 +37,13 @@ export const DatePicker = ({
     return value.includes(date);
   };
 
+  const onPlaceholderClick = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <SelectContainer ref={selectRef} fullWidth={fullWidth}>
-      <Placeholder isChecked={isSearching} onClick={() => setIsOpen(!isOpen)}>
+      <Placeholder isChecked={isSearching} onClick={onPlaceholderClick}>
         {placeholder}
       </Placeholder>
       <IconWrapper isOpen={!isOpen} isChecked={isSearching}>
@@ -54,11 +58,7 @@ export const DatePicker = ({
       {isOpen && (
         <OptionsList>
           {options.map((date, index) => (
-            <OptionLabel
-              key={index}
-              onClick={() => {
-                onChange(date);
-              }}>
+            <OptionLabel key={index} onClick={() => onChange(date)}>
               <OptionInput type="checkbox" name="date" value={date} />
               <Checkmark isChecked={onDateSelect(date)} />
               <Date isChecked={onDateSelect(date)}>{date}</Date>

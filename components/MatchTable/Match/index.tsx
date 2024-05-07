@@ -8,6 +8,7 @@ import {
   FlexContainer,
   OddContainer,
   Odd,
+  DummyOdd,
 } from "./styled";
 import type { Props } from "./types";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -24,6 +25,22 @@ export const Match = ({ event, selectedMatch, index }: Props) => {
     const currentEvent = events.find((e) => e.bid === event.bid);
     if (!currentEvent) return false;
     return currentEvent.m.odd === o.odd;
+  };
+
+  const onAddOrUpdateEvent = (o: O) => {
+    dispatch(
+      addOrUpdateEvent({
+        sid: event.sid,
+        bid: event.bid,
+        ede: event.ede,
+        edh: event.edh,
+        en: event.en,
+        m: o,
+        mb: event.mb,
+        iskbet: event.iskbet,
+        live: event.live,
+      })
+    );
   };
 
   return (
@@ -56,31 +73,17 @@ export const Match = ({ event, selectedMatch, index }: Props) => {
           </FlexContainer>
         </MatchDetail>
       </Detail>
-
       <OddContainer>
-        {selectedMatch?.o.map((m) => (
+        {selectedMatch?.o.map((o) => (
           <Odd
-            isSelected={checkIsSelected(m)}
-            onClick={() =>
-              dispatch(
-                addOrUpdateEvent({
-                  sid: event.sid,
-                  bid: event.bid,
-                  ede: event.ede,
-                  edh: event.edh,
-                  en: event.en,
-                  m: m,
-                  mb: event.mb,
-                  iskbet: event.iskbet,
-                  live: event.live,
-                })
-              )
-            }
-            key={m.ov}>
-            {m.odd}
+            isSelected={checkIsSelected(o)}
+            onClick={() => onAddOrUpdateEvent(o)}
+            key={o.ov}>
+            {o.odd}
           </Odd>
         ))}
       </OddContainer>
+      <DummyOdd >+56</DummyOdd>
     </Container>
   );
 };

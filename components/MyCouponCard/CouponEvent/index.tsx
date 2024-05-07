@@ -16,16 +16,17 @@ import {
   Odd,
 } from "./styled";
 import type { Props } from "./types";
+import { SPORTS } from "@/constants/index";
 
 export const CouponEvent = ({ event }: Props) => {
   const dispatch = useAppDispatch();
 
   const logoSrc =
     event.sid === 1
-      ? "/svg/futbol.svg"
+      ? SPORTS.futbol.icon
       : event.sid === 2
-      ? "/svg/basketbol.svg"
-      : "/svg/tenis.svg";
+      ? SPORTS.basketbol.icon
+      : SPORTS.tenis.icon;
 
   const { en, ede, edh, mb, m, iskbet, live } = event;
 

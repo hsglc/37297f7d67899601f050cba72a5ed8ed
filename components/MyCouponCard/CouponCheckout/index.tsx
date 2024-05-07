@@ -1,30 +1,35 @@
 import { Select } from "@/components/Select";
 import { useAppSelector } from "@/lib/hooks";
 
-import * as S from "./styled";
+import {
+  ApproveBetButton,
+  BetAmount,
+  Container,
+  FlexTextContainer,
+} from "./styled";
 import type { Props } from "./types";
 
 export const CouponCheckout = ({ openModal }: Props) => {
   const { totalOdds, betTimes } = useAppSelector((state) => state.coupon);
   return (
-    <S.CouponCheckout>
+    <Container>
       <div>
-        <S.BetAmount>Misli</S.BetAmount>
+        <BetAmount>Misli</BetAmount>
         <Select />
       </div>
-      <S.FlexTextContainer>
+      <FlexTextContainer>
         <span>Kupon Bedeli:</span>
-        <span>{betTimes},00</span>
-      </S.FlexTextContainer>
-      <S.FlexTextContainer>
+        <span>{betTimes},00 TL</span>
+      </FlexTextContainer>
+      <FlexTextContainer>
         <span>Toplam Oran:</span>
         <span>{totalOdds.toFixed(2)}</span>
-      </S.FlexTextContainer>
-      <S.FlexTextContainer>
+      </FlexTextContainer>
+      <FlexTextContainer>
         <span>Maksimum Kazanç:</span>
-        <span>{(totalOdds * betTimes).toFixed(2)}</span>
-      </S.FlexTextContainer>
-      <S.ApproveBetButton onClick={openModal}>Hemen Oyna</S.ApproveBetButton>
-    </S.CouponCheckout>
+        <span>{(totalOdds * betTimes).toFixed(2)} TL</span>
+      </FlexTextContainer>
+      <ApproveBetButton onClick={openModal}>Hemen Oyna</ApproveBetButton>
+    </Container>
   );
 };
