@@ -40,13 +40,18 @@ export const couponSlice = createSlice({
         } else {
           state.events.splice(index, 1);
           state.numberOfEvents -= 1;
+          if (state.events.length === 0) {
+            state.isVisible = false;
+            state.totalOdds = 0;
+          }
         }
       }
 
-      state.totalOdds = state.events.reduce(
+      const updatedOdds = state.events.reduce(
         (acc, event) => acc * event.m.odd,
         1
       );
+      state.totalOdds = updatedOdds === 1 ? 0 : updatedOdds;
     },
     removeEvent: (state, action: PayloadAction<CouponEvent>) => {
       const index = state.events.findIndex(
