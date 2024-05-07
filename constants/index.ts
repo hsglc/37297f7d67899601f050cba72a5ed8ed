@@ -7,6 +7,7 @@ export const SPORTS = {
     slug: "futbol",
     icon: "/svg/futbol.svg",
     href: "/program/futbol",
+    title: "Futbol",
   },
   basketbol: {
     id: 2,
@@ -14,6 +15,7 @@ export const SPORTS = {
     slug: "basketbol",
     icon: "/svg/basketbol.svg",
     href: "/program/basketbol",
+    title: "Basketbol",
   },
   tenis: {
     id: 5,
@@ -21,5 +23,6 @@ export const SPORTS = {
     slug: "tenis",
     icon: "/svg/tenis.svg",
     href: "/program/tenis",
+    title: "Tenis",
   },
 };

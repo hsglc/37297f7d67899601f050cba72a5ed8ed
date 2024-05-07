@@ -10,6 +10,9 @@ export const Wrapper = styled.section`
 export const Container = styled.div`
   display: flex;
   margin 5px 0;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const Table = styled.div`

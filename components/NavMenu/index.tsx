@@ -30,7 +30,7 @@ export const NavMenu = () => {
                 width={20}
                 height={20}
               />
-              <span>{SPORTS.futbol.slug}</span>
+              <span>{SPORTS.futbol.title}</span>
             </LinkItem>
           </LinkItemContainer>
           <LinkItemContainer
@@ -42,7 +42,7 @@ export const NavMenu = () => {
                 width={20}
                 height={20}
               />
-              <span>{SPORTS.basketbol.slug}</span>
+              <span>{SPORTS.basketbol.title}</span>
             </LinkItem>
           </LinkItemContainer>
           <LinkItemContainer isActiveProgram={program === SPORTS.tenis.slug}>
@@ -53,7 +53,7 @@ export const NavMenu = () => {
                 width={20}
                 height={20}
               />
-              <span>{SPORTS.tenis.slug}</span>
+              <span>{SPORTS.tenis.title}</span>
             </LinkItem>
           </LinkItemContainer>
         </NavLinkContainer>

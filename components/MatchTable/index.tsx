@@ -82,10 +82,10 @@ export const MatchTable = () => {
         {isError && <div>Herhangi bir maç bulunamadı</div>}
         {dates.map((date) => (
           <div key={date}>
-            <MatchHeader key={date} day={date} program={currentProgram.id} />
+            <MatchHeader key={date} day={date} program={currentProgram?.id} />
             {groupMatcheshByDay(date)?.map((event, index) => {
               const selectedMatch = event.m.find(
-                (m) => m.muk === currentProgram.muk
+                (m) => m.muk === currentProgram?.muk
               );
               if (!selectedMatch) return null;
               return (

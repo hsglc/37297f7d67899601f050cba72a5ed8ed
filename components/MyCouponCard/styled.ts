@@ -7,6 +7,12 @@ export const CardWrapper = styled.section`
   border-radius: 0 4px 4px 0;
   background-color: #ffffff;
   margin-left: 4px;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 6px;
+    margin: auto;
+    margin-bottom: 10px;
+  }
 `;
 
 export const CardContainer = styled.div`
