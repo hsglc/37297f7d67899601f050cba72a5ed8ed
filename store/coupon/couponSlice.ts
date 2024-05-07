@@ -15,7 +15,7 @@ const initialState: CouponState = {
   events: [],
   totalOdds: 0,
   numberOfEvents: 0,
-  isVisible: true,
+  isVisible: false,
   betTimes: 20,
 };
 
@@ -27,6 +27,9 @@ export const couponSlice = createSlice({
       const index = state.events.findIndex(
         (event) => event.bid === action.payload.bid
       );
+      if (state.events.length === 0) {
+        state.isVisible = true;
+      }
       if (index === -1) {
         state.numberOfEvents += 1;
         state.events.push(action.payload);
@@ -73,7 +76,7 @@ export const couponSlice = createSlice({
       state.totalOdds = 0;
       state.numberOfEvents = 0;
       state.isVisible = false;
-    }
+    },
   },
 });
 

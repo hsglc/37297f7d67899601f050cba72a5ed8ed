@@ -96,30 +96,29 @@ export const MyCouponCard = () => {
         </CardHeader>
         {isVisible && (
           <CardBody>
-            {events.length > 0 ? (
+            {events.length > 0 && (
               <SelectedEvents>
                 {events.map((event) => (
                   <CouponEvent key={event.bid} event={event} />
                 ))}
               </SelectedEvents>
-            ) : (
-              <NoMatches>
-                <Image
-                  src="/svg/iddaa.svg"
-                  alt="iddaa"
-                  width={48}
-                  height={36}
-                  priority
-                />
-                <NoMatchesTitle>
-                  Kuponunuzda maç bulunmamaktadır.
-                </NoMatchesTitle>
-                <NoMatchesDescription>
-                  Hemen bültene göz atarak maç ekleyebilirsin.
-                </NoMatchesDescription>
-              </NoMatches>
             )}
           </CardBody>
+        )}
+        {events.length === 0 && !isVisible && (
+          <NoMatches>
+            <Image
+              src="/svg/iddaa.svg"
+              alt="iddaa"
+              width={48}
+              height={36}
+              priority
+            />
+            <NoMatchesTitle>Kuponunuzda maç bulunmamaktadır.</NoMatchesTitle>
+            <NoMatchesDescription>
+              Hemen bültene göz atarak maç ekleyebilirsin.
+            </NoMatchesDescription>
+          </NoMatches>
         )}
       </CardContainer>
       {isVisible && <CouponCheckout openModal={openModal} />}
