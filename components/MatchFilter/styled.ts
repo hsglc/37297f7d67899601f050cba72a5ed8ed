@@ -38,14 +38,21 @@ export const TransparentButton = styled(Button)`
   background-color: transparent;
 `;
 
-export const MatchEndTitle = styled.h5`
+export const MatchEndTitle = styled.div<{ wideRatio: string }>`
   font-size: 12px;
   line-height: 13px;
   font-weight: 700;
-  border-right: 1px solid #313a3f;
   color: #fff;
-  width: 92px;
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  
+  & > h5 {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #313A3F;
+    width: ${({ wideRatio }) => wideRatio}
 `;

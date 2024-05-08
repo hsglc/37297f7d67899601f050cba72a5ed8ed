@@ -17,8 +17,6 @@ import { MbBadge } from "@/components/MbBadge/styled";
 import { O } from "@/types";
 import { convertToFormattedFloat } from "@/utils/convertToFormattedFloat";
 
-
-
 export const Match = ({ event, selectedMatch, index }: Props) => {
   const dispatch = useAppDispatch();
   const { mb, edh, en, iskbet, live } = event;
@@ -85,8 +83,8 @@ export const Match = ({ event, selectedMatch, index }: Props) => {
             {convertToFormattedFloat(o.odd)}
           </Odd>
         ))}
+        <DummyOdd>+56</DummyOdd>
       </OddContainer>
-      <DummyOdd>+56</DummyOdd>
     </Container>
   );
 };

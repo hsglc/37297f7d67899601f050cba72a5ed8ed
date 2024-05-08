@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div<{ index: number }>`
   background: ${({ index }) => (index % 2 === 0 ? "white" : "#E8EDEF")};
   display: flex;
+  width: 100%;
   min-height: 34px;
 `;
 
@@ -11,7 +12,7 @@ export const Detail = styled.ul`
   display: flex;
   list-style: none;
   border-right: 1px solid #9babb5;
-  width: 84%;
+  flex: 0 0 84%;
   padding-right: 10px;
 `;
 
@@ -53,14 +54,13 @@ export const FlexContainer = styled.div`
 `;
 
 export const OddContainer = styled.ul`
-  display: flex;
-  width: 92px;
-  justify-content: space-between;
   color: white;
   font-size: 11px;
   letter-spacing: -0.2px;
   line-height: 14.5px;
   font-weight: 700;
+  flex: 1;
+  display: flex;
 `;
 
 export const Odd = styled.button<{ isSelected: boolean }>`

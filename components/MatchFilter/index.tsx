@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -16,6 +16,7 @@ import {
 } from "./styled";
 import type { Props } from "./types";
 import { useRouterParams } from "@/hooks/useRouterFilter";
+import { SPORTS } from "@/constants";
 
 export const MatchFilter = ({ dates, name, setName }: Props) => {
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
@@ -53,6 +54,15 @@ export const MatchFilter = ({ dates, name, setName }: Props) => {
     clearParams("iskbet", "mb", "date");
     setName("");
   };
+
+  const currentProgram = useMemo(() => {
+    return SPORTS[query.id as keyof typeof SPORTS];
+  }, [query.id]);
+
+  const wideRatio = useMemo(() => {
+    console.log("1", currentProgram);
+    return currentProgram?.id === SPORTS.futbol.id ? "75%" : "66.66667%";
+  }, [currentProgram]);
 
   return (
     <Container>
@@ -112,7 +122,9 @@ export const MatchFilter = ({ dates, name, setName }: Props) => {
           </ClearFilterButton>
         </KingAndOneMatchWrapper>
       </FilterElements>
-      <MatchEndTitle>Maç Sonucu</MatchEndTitle>
+      <MatchEndTitle wideRatio={wideRatio}>
+        <h5>Maç Sonucu</h5>
+      </MatchEndTitle>
     </Container>
   );
 };

@@ -2,14 +2,13 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   -webkit-box-align: center;
-  align-items: center;
   background: #353f45;
   color: rgb(255, 255, 255);
   display: flex;
   font-size: 14px;
   font-weight: 600;
   height: 30px;
-  line-height: 30px;
+  width: 100%;
 `;
 
 export const Date = styled.div`
@@ -25,11 +24,12 @@ export const Date = styled.div`
   white-space: nowrap;
   padding-left: 15px;
   border-right: 1px solid #414e55;
-  width: 84%;
+  flex: 0 0 84%;
 `;
 
 export const Odds = styled.div`
   display: flex;
+  flex: 1;
   width: 92px;
   justify-content: space-between;
   color: white;
@@ -43,12 +43,8 @@ export const Odds = styled.div`
     font-size: 10px;
     line-height: 12px;
     font-weight: 700;
+    :last-child {
+      border: none;
+    }
   }
-`;
-
-export const ExpandIconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 18px;
 `;
