@@ -22,7 +22,7 @@ export const CardContainer = styled.div`
 
 export const CardHeader = styled.div`
   position: sticky;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 0 0;
   background-color: #3a4449;
   padding: 10px 12px;
   height: 63px;
@@ -102,6 +102,7 @@ export const CardBody = styled.div`
   min-height: 135px;
   overflow: hidden auto;
   position: relative;
+  border-right: 1px solid #282f33;
 `;
 
 export const SelectedEvents = styled.div`

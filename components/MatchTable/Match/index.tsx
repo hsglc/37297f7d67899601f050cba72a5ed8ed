@@ -15,6 +15,9 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addOrUpdateEvent } from "@/store/coupon/couponSlice";
 import { MbBadge } from "@/components/MbBadge/styled";
 import { O } from "@/types";
+import { convertToFormattedFloat } from "@/utils/convertToFormattedFloat";
+
+
 
 export const Match = ({ event, selectedMatch, index }: Props) => {
   const dispatch = useAppDispatch();
@@ -79,11 +82,11 @@ export const Match = ({ event, selectedMatch, index }: Props) => {
             isSelected={checkIsSelected(o)}
             onClick={() => onAddOrUpdateEvent(o)}
             key={o.ov}>
-            {o.odd}
+            {convertToFormattedFloat(o.odd)}
           </Odd>
         ))}
       </OddContainer>
-      <DummyOdd >+56</DummyOdd>
+      <DummyOdd>+56</DummyOdd>
     </Container>
   );
 };

@@ -10,7 +10,6 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 11px;
   color: white;
-  margin-top: 7.5px;
 `;
 
 export const BetAmount = styled.p`

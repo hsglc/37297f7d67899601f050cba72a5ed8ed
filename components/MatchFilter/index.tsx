@@ -49,6 +49,11 @@ export const MatchFilter = ({ dates, name, setName }: Props) => {
     }
   }, [query.id, query.date]);
 
+  const clearFilter = () => {
+    clearParams("iskbet", "mb", "date");
+    setName("");
+  };
+
   return (
     <Container>
       <FilterElements>
@@ -96,8 +101,7 @@ export const MatchFilter = ({ dates, name, setName }: Props) => {
             />
           </TransparentButton>
 
-          <ClearFilterButton
-            onClick={() => clearParams("iskbet", "mb", "date")}>
+          <ClearFilterButton onClick={clearFilter}>
             <Image
               src="/svg/trash.svg"
               alt="clear filter"

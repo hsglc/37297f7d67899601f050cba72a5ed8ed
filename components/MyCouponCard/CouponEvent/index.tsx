@@ -17,6 +17,7 @@ import {
 } from "./styled";
 import type { Props } from "./types";
 import { SPORTS } from "@/constants/index";
+import { convertToFormattedFloat } from "@/utils/convertToFormattedFloat";
 
 export const CouponEvent = ({ event }: Props) => {
   const dispatch = useAppDispatch();
@@ -64,7 +65,7 @@ export const CouponEvent = ({ event }: Props) => {
           </p>
         </FlexContainer>
         <FlexContainer>
-          <Odd>{m.odd}</Odd>
+          <Odd>{convertToFormattedFloat(m.odd)}</Odd>
           {iskbet && (
             <Image
               src="/svg/iskbet.svg"

@@ -38,6 +38,7 @@ export const EventTime = styled.span`
 
 export const EventName = styled.p`
     max-width: 170px;
+    line-height: 13px;
 `;
 
 export const EventBet = styled.div`
