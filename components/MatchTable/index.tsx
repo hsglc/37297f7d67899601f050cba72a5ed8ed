@@ -11,6 +11,7 @@ import { useRouterParams } from "@/hooks/useRouterFilter";
 import { MatchHeader } from "./MatchHeader";
 import { Match } from "./Match";
 import { SPORTS } from "@/constants";
+import { NoMatchesFound } from "../NoMatchesFound";
 
 export const MatchTable = () => {
   const { query } = useRouter();
@@ -73,6 +74,9 @@ export const MatchTable = () => {
     },
     [filteredData]
   );
+  const hasMatchOnThatDay = (day: string) => {
+    return filteredData?.some((match) => match.ede === day);
+  };
 
   return (
     <Container>
@@ -80,25 +84,30 @@ export const MatchTable = () => {
       <div>
         {isLoading && <div>Yükleniyor</div>}
         {isError && <div>Herhangi bir maç bulunamadı</div>}
-        {dates.map((date) => (
-          <div key={date}>
-            <MatchHeader key={date} day={date} program={currentProgram?.id} />
-            {groupMatcheshByDay(date)?.map((event, index) => {
-              const selectedMatch = event.m.find(
-                (m) => m.muk === currentProgram?.muk
-              );
-              if (!selectedMatch) return null;
-              return (
-                <Match
-                  index={index}
-                  key={selectedMatch.mid}
-                  event={event}
-                  selectedMatch={selectedMatch}
-                />
-              );
-            })}
-          </div>
-        ))}
+        {dates.map((date) => {
+          if (!hasMatchOnThatDay(date)) return null;
+          return (
+            <div key={date}>
+              <MatchHeader key={date} day={date} program={currentProgram?.id} />
+              {groupMatcheshByDay(date)?.map((event, index) => {
+                const selectedMatch = event.m.find(
+                  (m) => m.muk === currentProgram?.muk
+                );
+
+                return (
+                  <Match
+                    currentProgram={currentProgram?.slug as keyof typeof SPORTS}
+                    index={index}
+                    key={selectedMatch?.mid ?? index}
+                    event={event}
+                    selectedMatch={selectedMatch}
+                  />
+                );
+              })}
+            </div>
+          );
+        })}
+        {filteredData?.length === 0 && <NoMatchesFound component="matches" />}
       </div>
     </Container>
   );

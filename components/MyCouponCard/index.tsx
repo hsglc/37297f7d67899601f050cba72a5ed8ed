@@ -8,9 +8,6 @@ import {
   TotalOddsWrapper,
   TotalMatchesWrapper,
   TotalMatches,
-  NoMatches,
-  NoMatchesTitle,
-  NoMatchesDescription,
   SelectedEvents,
   CardBody,
   TotalMatchesIconContainer,
@@ -28,6 +25,7 @@ import useHover from "@/hooks/useHover";
 import { useState } from "react";
 import { Modal } from "../Modal";
 import { CouponCheckout } from "./CouponCheckout";
+import { NoMatchesFound } from "../NoMatchesFound";
 
 export const MyCouponCard = () => {
   const { totalOdds, events, isVisible } = useAppSelector(
@@ -106,19 +104,7 @@ export const MyCouponCard = () => {
           </CardBody>
         )}
         {events.length === 0 && !isVisible && (
-          <NoMatches>
-            <Image
-              src="/svg/iddaa.svg"
-              alt="iddaa"
-              width={48}
-              height={36}
-              priority
-            />
-            <NoMatchesTitle>Kuponunuzda maç bulunmamaktadır.</NoMatchesTitle>
-            <NoMatchesDescription>
-              Hemen bültene göz atarak maç ekleyebilirsin.
-            </NoMatchesDescription>
-          </NoMatches>
+          <NoMatchesFound component="coupon" />
         )}
       </CardContainer>
       {isVisible && <CouponCheckout openModal={openModal} />}

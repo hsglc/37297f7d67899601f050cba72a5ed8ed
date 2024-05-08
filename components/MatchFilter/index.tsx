@@ -60,7 +60,6 @@ export const MatchFilter = ({ dates, name, setName }: Props) => {
   }, [query.id]);
 
   const wideRatio = useMemo(() => {
-    console.log("1", currentProgram);
     return currentProgram?.id === SPORTS.futbol.id ? "75%" : "66.66667%";
   }, [currentProgram]);
 

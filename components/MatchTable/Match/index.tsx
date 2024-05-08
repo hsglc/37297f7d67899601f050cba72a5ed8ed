@@ -17,7 +17,12 @@ import { MbBadge } from "@/components/MbBadge/styled";
 import { O } from "@/types";
 import { convertToFormattedFloat } from "@/utils/convertToFormattedFloat";
 
-export const Match = ({ event, selectedMatch, index }: Props) => {
+export const Match = ({
+  event,
+  selectedMatch,
+  index,
+  currentProgram,
+}: Props) => {
   const dispatch = useAppDispatch();
   const { mb, edh, en, iskbet, live } = event;
   const { events } = useAppSelector((state) => state.coupon);
@@ -27,6 +32,18 @@ export const Match = ({ event, selectedMatch, index }: Props) => {
     if (!currentEvent) return false;
     return currentEvent.m.odd === o.odd;
   };
+
+  const emptyOdds =
+    currentProgram === "futbol"
+      ? [
+          { ov: 1, odd: "-" },
+          { ov: 0, odd: "-" },
+          { ov: 2, odd: "-" },
+        ]
+      : [
+          { ov: 1, odd: "-" },
+          { ov: 2, odd: "-" },
+        ];
 
   const onAddOrUpdateEvent = (o: O) => {
     dispatch(
@@ -75,14 +92,21 @@ export const Match = ({ event, selectedMatch, index }: Props) => {
         </MatchDetail>
       </Detail>
       <OddContainer>
-        {selectedMatch?.o.map((o) => (
-          <Odd
-            isSelected={checkIsSelected(o)}
-            onClick={() => onAddOrUpdateEvent(o)}
-            key={o.ov}>
-            {convertToFormattedFloat(o.odd)}
-          </Odd>
-        ))}
+        {selectedMatch
+          ? selectedMatch.o.map((o) => (
+              <Odd
+                isSelected={checkIsSelected(o)}
+                onClick={() => onAddOrUpdateEvent(o)}
+                key={o.ov}>
+                {convertToFormattedFloat(o.odd)}
+              </Odd>
+            ))
+          : emptyOdds?.map((o) => (
+              <Odd isSelected={false} key={o.ov}>
+                -
+              </Odd>
+            ))}
+
         <DummyOdd>+56</DummyOdd>
       </OddContainer>
     </Container>
